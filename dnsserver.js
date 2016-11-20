@@ -19,12 +19,12 @@
 // THE SOFTWARE.
 //
 
-var sys = require('sys'),
+var sys = require('util'),
     Buffer = require('buffer').Buffer,
     dgram = require('dgram');
 
 host = 'localhost';
-port = 9999;
+port = 53;
 
 // slices a single byte into bits
 // assuming only single bytes
@@ -405,30 +405,22 @@ server.addListener('error', function (e) {
 //
 //TODO create records database
 
+var myDomain = 'mdobs.foo';
+
 records = {};
-records['tomhughescroucher.com'] = {};
-records['tomhughescroucher.com']['in'] = {};
-records['tomhughescroucher.com']['in']['a'] = [];
-
-var r = {};
-r.qname = domainToQname('tomhughescroucher.com');
-r.qtype = 1;
-r.qclass = 1;
-r.ttl = 1;
-r.rdlength = 4;
-r.rdata = 0xBC8A0009;
-
-records['tomhughescroucher.com']['in']['a'].push(r);
+records[myDomain] = {};
+records[myDomain]['in'] = {};
+records[myDomain]['in']['a'] = [];
 
 r = {};
-r.qname = domainToQname('tomhughescroucher.com');
+r.qname = domainToQname(myDomain);
 r.qtype = 1;
 r.qclass = 1;
 r.ttl = 1;
 r.rdlength = 4;
 r.rdata = 0x7F000001;
 
-records['tomhughescroucher.com']['in']['a'].push(r);
+records[myDomain]['in']['a'].push(r);
 
 server.bind(port, host);
 console.log('Started server on ' + host + ':' + port);
