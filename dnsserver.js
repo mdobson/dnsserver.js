@@ -405,22 +405,41 @@ server.addListener('error', function (e) {
 //
 //TODO create records database
 
-var myDomain = 'mdobs.foo';
-
 records = {};
-records[myDomain] = {};
-records[myDomain]['in'] = {};
-records[myDomain]['in']['a'] = [];
+var myDomain = 'mdobs.foo';
+function createRecord(domain, qtype, qclass, ttl, rdlength, rdata) {
+  records[myDomain] = {};
+  records[myDomain]['in'] = {};
+  records[myDomain]['in']['a'] = [];
 
-r = {};
-r.qname = domainToQname(myDomain);
-r.qtype = 1;
-r.qclass = 1;
-r.ttl = 1;
-r.rdlength = 4;
-r.rdata = 0x7F000001;
+  r = {};
+  r.qname = domainToQname(myDomain);
+  r.qtype = qtype;
+  r.qclass = qclass;
+  r.ttl = ttl;
+  r.rdlength = rdlength;
+  r.rdata = rdata;
 
-records[myDomain]['in']['a'].push(r);
+  records[myDomain]['in']['a'].push(r);
+
+
+}
+
+//records[myDomain] = {};
+//records[myDomain]['in'] = {};
+//records[myDomain]['in']['a'] = [];
+//
+//r = {};
+//r.qname = domainToQname(myDomain);
+//r.qtype = 1;
+//r.qclass = 1;
+//r.ttl = 1;
+//r.rdlength = 4;
+//r.rdata = 0x7F000001;
+//
+//records[myDomain]['in']['a'].push(r);
+
+createRecord(myDomain, 1, 1, 1, 4, 0x7F000001);
 
 server.bind(port, host);
 console.log('Started server on ' + host + ':' + port);
